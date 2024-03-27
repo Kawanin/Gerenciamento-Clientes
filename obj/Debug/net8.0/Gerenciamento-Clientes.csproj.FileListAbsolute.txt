@@ -23,3 +23,4 @@ C:\Users\autologon\Gerenciamento-Clientes\obj\Debug\net8.0\refint\Gerenciamento-
 C:\Users\autologon\Gerenciamento-Clientes\obj\Debug\net8.0\Gerenciamento-Clientes.pdb
 C:\Users\autologon\Gerenciamento-Clientes\obj\Debug\net8.0\Gerenciamento-Clientes.genruntimeconfig.cache
 C:\Users\autologon\Gerenciamento-Clientes\obj\Debug\net8.0\ref\Gerenciamento-Clientes.dll
+C:\Users\autologon\Gerenciamento-Clientes\obj\Debug\net8.0\Gerenciamento-Clientes.sourcelink.json

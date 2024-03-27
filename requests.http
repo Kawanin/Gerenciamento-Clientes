@@ -1,0 +1,35 @@
+### Requisição GET
+GET http://localhost:5143/gerenciamento
+
+###
+GET http://localhost:5143/gerenciamento/cliente
+
+###
+GET http://localhost:5143/gerenciamento/555
+
+
+### Requisição POST
+POST http://localhost:5143/gerenciamento
+Content-Type: application/json
+
+{
+    "Nome": "Hidráulico",
+    "Concluida": false
+}
+
+
+### Requisição PUT
+PUT http://localhost:5143/gerenciamento/555
+Content-Type: application/json
+
+{
+    "Nome": "Hidráulico",
+    "Concluida": false
+}
+
+
+### Requisição DELETE
+DELETE http://localhost:5143/gerenciamento/555
+
+
+### 
