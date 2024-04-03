@@ -12,8 +12,12 @@ GET http://localhost:5143/gerenciamento/555
 POST http://localhost:5143/gerenciamento
 Content-Type: application/json
 
-{
-    "Nome": "Hidráulico",
+{   
+    "Id": 1,
+    "Nome": "André",
+    "Empreendimento": "Arte Acqua",
+    "Unidade": "AP 21",
+    "Manutencao": "Hidráulico",
     "Concluida": false
 }
 

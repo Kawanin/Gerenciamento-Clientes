@@ -24,3 +24,10 @@ C:\Users\autologon\Gerenciamento-Clientes\obj\Debug\net8.0\Gerenciamento-Cliente
 C:\Users\autologon\Gerenciamento-Clientes\obj\Debug\net8.0\Gerenciamento-Clientes.genruntimeconfig.cache
 C:\Users\autologon\Gerenciamento-Clientes\obj\Debug\net8.0\ref\Gerenciamento-Clientes.dll
 C:\Users\autologon\Gerenciamento-Clientes\obj\Debug\net8.0\Gerenciamento-Clientes.sourcelink.json
+C:\Users\autologon\Gerenciamento-Clientes\obj\Debug\net8.0\Gerenciamento-Clientes.csproj.AssemblyReference.cache
+C:\Users\autologon\Gerenciamento-Clientes\bin\Debug\net8.0\Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll
+C:\Users\autologon\Gerenciamento-Clientes\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+C:\Users\autologon\Gerenciamento-Clientes\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\autologon\Gerenciamento-Clientes\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.InMemory.dll
+C:\Users\autologon\Gerenciamento-Clientes\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\autologon\Gerenciamento-Clientes\obj\Debug\net8.0\Gerenciamento-Clientes.csproj.CopyComplete
