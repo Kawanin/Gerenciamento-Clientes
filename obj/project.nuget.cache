@@ -1,15 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "+bZPWyk2MdSdyFpOhDszMTFvxxq9FPUFzsRYFzF+7R1IVr/aCv0CjE2wpKBdmsOqIJ3xcB3n0FbBHxf/t1pECw==",
-  "success": true,
+  "dgSpecHash": "X1eFVDwoayyksAaTkPfdOW/RAZ045ng4WUc+FVX1TIIe4Ui6nMmp7/vXAMuluI8tvto1NOcePF0bPzfogo0wlw==",
+  "success": false,
   "projectFilePath": "C:\\Users\\autologon\\Gerenciamento-Clientes\\Gerenciamento-Clientes.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\autologon\\.nuget\\packages\\microsoft.aspnetcore.diagnostics.entityframeworkcore\\8.0.3\\microsoft.aspnetcore.diagnostics.entityframeworkcore.8.0.3.nupkg.sha512",
-    "C:\\Users\\autologon\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.3\\microsoft.entityframeworkcore.8.0.3.nupkg.sha512",
-    "C:\\Users\\autologon\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.3\\microsoft.entityframeworkcore.abstractions.8.0.3.nupkg.sha512",
-    "C:\\Users\\autologon\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.3\\microsoft.entityframeworkcore.analyzers.8.0.3.nupkg.sha512",
-    "C:\\Users\\autologon\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\8.0.3\\microsoft.entityframeworkcore.inmemory.8.0.3.nupkg.sha512",
-    "C:\\Users\\autologon\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\8.0.3\\microsoft.entityframeworkcore.relational.8.0.3.nupkg.sha512",
+    "C:\\Users\\autologon\\.nuget\\packages\\microsoft.aspnetcore.diagnostics.entityframeworkcore\\8.0.4\\microsoft.aspnetcore.diagnostics.entityframeworkcore.8.0.4.nupkg.sha512",
+    "C:\\Users\\autologon\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.0\\microsoft.entityframeworkcore.8.0.0.nupkg.sha512",
+    "C:\\Users\\autologon\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.0\\microsoft.entityframeworkcore.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\autologon\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\8.0.0\\microsoft.entityframeworkcore.analyzers.8.0.0.nupkg.sha512",
+    "C:\\Users\\autologon\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\8.0.0\\microsoft.entityframeworkcore.inmemory.8.0.0.nupkg.sha512",
+    "C:\\Users\\autologon\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\8.0.4\\microsoft.entityframeworkcore.relational.8.0.4.nupkg.sha512",
     "C:\\Users\\autologon\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\8.0.0\\microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\autologon\\.nuget\\packages\\microsoft.extensions.caching.memory\\8.0.0\\microsoft.extensions.caching.memory.8.0.0.nupkg.sha512",
     "C:\\Users\\autologon\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
@@ -20,5 +20,15 @@
     "C:\\Users\\autologon\\.nuget\\packages\\microsoft.extensions.options\\8.0.0\\microsoft.extensions.options.8.0.0.nupkg.sha512",
     "C:\\Users\\autologon\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1605",
+      "level": "Error",
+      "message": "Warning As Error: Downgrade de pacote detectado: Microsoft.EntityFrameworkCore de 8.0.4 para 8.0.0. Referencie o pacote diretamente do projeto para selecionar uma versão diferente. \r\n Gerenciamento-Clientes -> Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore 8.0.4 -> Microsoft.EntityFrameworkCore.Relational 8.0.4 -> Microsoft.EntityFrameworkCore (>= 8.0.4) \r\n Gerenciamento-Clientes -> Microsoft.EntityFrameworkCore (>= 8.0.0)",
+      "libraryId": "Microsoft.EntityFrameworkCore",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }
