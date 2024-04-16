@@ -12,34 +12,25 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 
 var app = builder.Build();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 
 
 app.MapGet("/", () => "Gerenciamento Manutenções");
 
-app.MapGet("/empreendimentos", async (BancodeDados db) => await db.Edificio.ToListAsync());
-
-app.MapPost("/Ediicio", async () =>
-{
-Edificio edificio, BancodeDados db;
-{
-    DbContext.Pessoas.Add(pessoa);
-    //Insert into ...
-    await db.SaveChangesAsync();
-
-    return Results.Created($"/pessoas/{pessoa.Id}", pessoa);
-});
+app.MapGet("/Edificios", async (BancodeDados db) => await db.Edificio.ToListAsync());
 
 app.MapPut("/Cliente", async (int id, ClienteResidencial clienteAlterado, BancodeDados db) =>
 {
     //select * from pessoa where id = ?
-    var pessoa = await db.Pessoas.FindAsync(id);
-    if (pessoa is null)
+    var cliente = await db.Clientes.FindAsync(id);
+    if (cliente is null)
     {
         return Results.NotFound();
     }
 
-    pessoa.Nome = clienteAlterado.Nome;
+    cliente.Nome = clienteAlterado.Nome;
 
     //update ...
     await db.SaveChangesAsync();
@@ -49,9 +40,9 @@ app.MapPut("/Cliente", async (int id, ClienteResidencial clienteAlterado, Bancod
 
 app.MapDelete("/Cliente/{id}", async (int id, BancodeDados db) =>
 {
-    if (await db.ClienteResidencial.FindAsync(id) is Cliente cliente)
+    if (await db.ClienteResidencial.FindAsync(id) is Clientes cliente)
     {
-        db.Clientes.Remove(pessoa);
+        db.Clientes.Remove(cliente);
         //delete from ...
         await db.SaveChangesAsync();
         return Results.NoContent();
