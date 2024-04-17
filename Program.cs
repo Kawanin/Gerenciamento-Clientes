@@ -19,7 +19,7 @@ app.UseSwaggerUI();
 
 app.MapGet("/", () => "Gerenciamento Manutenções");
 
-app.MapGet("/Edificios", async (BancodeDados db) => await db.Edificio.ToListAsync());
+//app.MapGet("/Edificios", async (BancodeDados db) => await db.Edificio.ToListAsync());
 
 app.MapPut("/Cliente", async (int id, ClienteResidencial clienteAlterado, BancodeDados db) =>
 {
@@ -40,9 +40,9 @@ app.MapPut("/Cliente", async (int id, ClienteResidencial clienteAlterado, Bancod
 
 app.MapDelete("/Cliente/{id}", async (int id, BancodeDados db) =>
 {
-    if (await db.ClienteResidencial.FindAsync(id) is Clientes cliente)
+    // if (await db.ClienteResidencial.FindAsync(id) is Clientes cliente)
     {
-        db.Clientes.Remove(cliente);
+        //    db.Clientes.Remove(cliente);
         //delete from ...
         await db.SaveChangesAsync();
         return Results.NoContent();

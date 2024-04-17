@@ -12,6 +12,6 @@ class BancodeDados : DbContext
     public DbSet<Obra> Obras { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
-        builder.UseMySql("server=localhost;port=3306;database=projeto;user=root;password="positivo");
+        builder.UseMySQL("server=localhost;port=3306;database=projeto;user=root;password=positivo");
     }
 }
