@@ -2,62 +2,57 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Configuração do banco de dados
+builder.Services.AddDbContext<BancodeDados>();
+
+
 //Config do BD
 builder.Services.AddDbContext<BancodeDados>(options => options.UseInMemoryDatabase("gerenciamentos"));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 
 var app = builder.Build();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 
-app.MapGet("/", () => "API de Gerenciamento de Manutenções"); //Requisição Get
 
-app.MapGet("/gerenciamento", async (BancodeDados db) =>
+app.MapGet("/", () => "Gerenciamento Manutenções");
+
+//app.MapGet("/Edificios", async (BancodeDados db) => await db.Edificio.ToListAsync());
+
+app.MapPut("/Cliente", async (int id, ClienteResidencial clienteAlterado, BancodeDados db) =>
 {
-    //select * from Gerenciamentos
-    return await db.Gerenciamentos.ToListAsync();
-});
+    //select * from pessoa where id = ?
+    var cliente = await db.Clientes.FindAsync(id);
+    if (cliente is null)
+    {
+        return Results.NotFound();
+    }
 
-app.MapGet("/gerenciamento/cliente", () => "Clientes");
-app.MapGet("/gerenciamento/{id}", () => "Empreendimento");
+    cliente.Nome = clienteAlterado.Nome;
 
-app.MapPost("/gerenciamento", async (Gerenciamento gerenciamento, BancodeDados db) =>
-{
-    db.Gerenciamentos.Add(gerenciamento);
-    //insert into gerenciamento
-    await db.SaveChangesAsync();
-
-    return Results.Created($"/gerenciamento/{gerenciamento.Id}", gerenciamento);
-});
-
-
-app.MapPut("/gerenciamento/{id}", async (int id, Gerenciamento gerenciamentoAtualizado, BancodeDados db) =>
-{
-    //select * from Gerenciamentos where id = ?
-    var gerenciamento = await db.Gerenciamentos.FindAsync(id);
-    if (gerenciamento == null) return Results.NotFound();
-
-    gerenciamento.Manutencao = gerenciamentoAtualizado.Manutencao;
-    gerenciamento.Concluida = gerenciamentoAtualizado.Concluida;
-
-    //update manutenções
+    //update ...
     await db.SaveChangesAsync();
 
     return Results.NoContent();
 });
 
-
-app.MapDelete("/gerenciamento/{id}", async (int id, BancodeDados db) =>
+app.MapDelete("/Cliente/{id}", async (int id, BancodeDados db) =>
 {
-    if (await db.Gerenciamentos.FindAsync(id) is Gerenciamento gerenciamento)
+    // if (await db.ClienteResidencial.FindAsync(id) is Clientes cliente)
     {
-        db.Gerenciamentos.Remove(gerenciamento);
-        //delete from Gerenciamento
+        //    db.Clientes.Remove(cliente);
+        //delete from ...
         await db.SaveChangesAsync();
         return Results.NoContent();
     }
     return Results.NotFound();
+
 });
+
+
+//Select * from pessoas
 
 
 // Método |   SQL  | 
