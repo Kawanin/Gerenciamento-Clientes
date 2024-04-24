@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gerenciamento_Clientes.Migrations
 {
     [DbContext(typeof(BancodeDados))]
-    partial class BancodeDadosModelSnapshot : ModelSnapshot
+    [Migration("20240424170232_VersaoAlterada24042024")]
+    partial class VersaoAlterada24042024
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,7 +117,7 @@ namespace Gerenciamento_Clientes.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("EquipeManutencao");
+                    b.ToTable("Equipes");
                 });
 
             modelBuilder.Entity("Imovel", b =>
@@ -158,35 +161,7 @@ namespace Gerenciamento_Clientes.Migrations
                     b.HasIndex("EquipeID")
                         .IsUnique();
 
-                    b.ToTable("LiderEquipe");
-                });
-
-            modelBuilder.Entity("Manutencoes", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("DataAbertura")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime?>("DataConclusao")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("chamado")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Manutencoes");
+                    b.ToTable("Lider");
                 });
 
             modelBuilder.Entity("Obra", b =>
