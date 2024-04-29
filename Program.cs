@@ -76,7 +76,7 @@ app.MapPost("/ChamadosManutencao", async (Manutencoes chamado, BancodeDados db) 
     await db.SaveChangesAsync();
 
     
-    return Results.Created($"/ChamadosManutencao/{chamado.Id}", chamado);
+    return Results.Created($"/ChamadosManutencao/{chamado.ID}", chamado);
 });
 
 app.MapPut("/ChamadosManutencao/{id}", async (int id, Manutencoes chamadoAlterado, BancodeDados db) =>
