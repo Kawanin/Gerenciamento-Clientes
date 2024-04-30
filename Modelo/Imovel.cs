@@ -4,5 +4,5 @@ public class Imovel
     public string Tipo { get; set; } // "Condominio" ou "Edificio"
     public string Nome { get; set; }
     public string Endereco { get; set; }
-    public virtual ICollection<ClienteResidencial> ClientesResidenciais { get; set; }
+    public List<ClienteResidencial> ClientesResidenciais { get; set; }
 }

@@ -20,14 +20,43 @@ app.MapGet("/", () => "Gerenciamento Manutenções");
 
 
 //Clientes
+app.MapGet("/Clientes", async (BancodeDados db) =>
+{
+    var clientes = await db.Clientes.ToListAsync();
+    return Results.Ok(clientes);
+});
+
+app.MapGet("/Clientes/{id}", async (int id, BancodeDados db) =>
+{
+    var cliente = await db.Clientes.FindAsync(id);
+    if (cliente == null)
+    {
+        return Results.NotFound();
+    }
+
+    return Results.Ok(cliente);
+});
+
 app.MapPost("/Clientes", async (ClienteResidencial cliente, BancodeDados db) =>
 {
-    
-    db.Clientes.Add(cliente);
-    
+    var novoImovel = new Imovel
+    {
+        Tipo = "Edificio",
+        Nome = "Arte Palladium",
+        Endereco = "R Maria Trevisan Tortato 290, AP 21"
+    };
+
+    var novoClienteResidencial = new ClienteResidencial
+    {
+        Nome = "Jefferson",
+        Telefone = "41984542918",
+        Imovel = novoImovel
+    };
+    db.Clientes.Add(novoClienteResidencial);
+
     await db.SaveChangesAsync();
 
-    return Results.Created($"/Clientes/{cliente}", cliente);
+    return Results.Created($"/Clientes/{novoClienteResidencial.ID}", novoClienteResidencial);
 });
 
 app.MapPut("/Clientes/{id}", async (int id, ClienteResidencial clienteAlterado, BancodeDados db) =>
@@ -39,6 +68,7 @@ app.MapPut("/Clientes/{id}", async (int id, ClienteResidencial clienteAlterado, 
     }
 
     cliente.Nome = clienteAlterado.Nome;
+    cliente.Telefone = clienteAlterado.Telefone;
 
     await db.SaveChangesAsync();
 
@@ -54,41 +84,60 @@ app.MapDelete("/Clientes/{id}", async (int id, BancodeDados db) =>
     }
 
     db.Clientes.Remove(cliente);
-    
     await db.SaveChangesAsync();
 
     return Results.NoContent();
 });
 
-app.MapGet("/Clientes", async (BancodeDados db) =>
-{
-    var clientes = await db.Clientes.ToListAsync();
-    return Results.Ok(clientes);
-});
-
 
 //Manutenções
-app.MapPost("/ChamadosManutencao", async (Manutencoes chamado, BancodeDados db) =>
+app.MapGet("/ChamadosManutencao", async (BancodeDados db) =>
 {
-    
-    db.Manutencoes.Add(chamado);
-    
-    await db.SaveChangesAsync();
-
-    
-    return Results.Created($"/ChamadosManutencao/{chamado.Id}", chamado);
+    var chamados = await db.ChamadosManutencao.ToListAsync();
+    return Results.Ok(chamados);
 });
 
-app.MapPut("/ChamadosManutencao/{id}", async (int id, Manutencoes chamadoAlterado, BancodeDados db) =>
+app.MapGet("/ChamadosManutencao/{id}", async (int id, BancodeDados db) =>
 {
-    var chamado = await db.Manutencoes.FindAsync(id);
+    var chamado = await db.ChamadosManutencao.FindAsync(id);
+    if (chamado == null)
+    {
+        return Results.NotFound();
+    }
+    return Results.Ok(chamado);
+});
+
+app.MapPost("/ChamadosManutencao", async (ChamadoManutencao chamado, BancodeDados db) =>
+{
+    var novoChamado = new ChamadoManutencao
+    {
+        UnidadeResidencialID = 1,
+        DescricaoProblema = "Problema na rede elétrica",
+        DataAbertura = DateTime.Now,
+        DataPrimeiroContato = DateTime.Now,
+        MotivoNaoRealizacao = null,
+        EquipeManutencaoID = 1 
+    };
+
+    db.ChamadosManutencao.Add(novoChamado);
+    await db.SaveChangesAsync();
+
+    return Results.Created($"/ChamadosManutencao/{novoChamado.ID}", novoChamado);
+});
+
+app.MapPut("/ChamadosManutencao/{id}", async (int id, ChamadoManutencao chamadoAtualizado, BancodeDados db) =>
+{
+    var chamado = await db.ChamadosManutencao.FindAsync(id);
     if (chamado == null)
     {
         return Results.NotFound();
     }
 
-    chamado.Status = chamadoAlterado.Status;
-
+    chamado.DescricaoProblema = chamadoAtualizado.DescricaoProblema;
+    chamado.DataPrimeiroContato = chamadoAtualizado.DataPrimeiroContato;
+    chamado.MotivoNaoRealizacao = chamadoAtualizado.MotivoNaoRealizacao;
+    chamado.EquipeManutencaoID = chamadoAtualizado.EquipeManutencaoID;
+    chamado.UnidadeResidencialID = chamadoAtualizado.UnidadeResidencialID;
     await db.SaveChangesAsync();
 
     return Results.NoContent();
@@ -96,23 +145,16 @@ app.MapPut("/ChamadosManutencao/{id}", async (int id, Manutencoes chamadoAlterad
 
 app.MapDelete("/ChamadosManutencao/{id}", async (int id, BancodeDados db) =>
 {
-    var chamado = await db.Manutencoes.FindAsync(id);
+    var chamado = await db.ChamadosManutencao.FindAsync(id);
     if (chamado == null)
     {
         return Results.NotFound();
     }
 
-    db.Manutencoes.Remove(chamado);
-    
+    db.ChamadosManutencao.Remove(chamado);
     await db.SaveChangesAsync();
 
     return Results.NoContent();
-});
-
-app.MapGet("/ChamadosManutencao", async (BancodeDados db) =>
-{
-    var chamados = await db.Manutencoes.ToListAsync();
-    return Results.Ok(chamados);
 });
 
 
@@ -123,11 +165,40 @@ app.MapGet("/Imoveis", async (BancodeDados db) =>
     return Results.Ok(imoveis);
 });
 
+app.MapGet("/Imoveis/{id}", async (int id, BancodeDados db) =>
+{
+    var imovel = await db.Condominios.FindAsync(id);
+    if (imovel == null)
+    {
+        return Results.NotFound();
+    }
+
+    return Results.Ok(imovel);
+});
+
 app.MapPost("/Imoveis", async (Imovel imovel, BancodeDados db) =>
 {
-    db.Condominios.Add(imovel);
+   var artePalladiumAP21 = new Imovel
+    {
+        Tipo = "Edificio",
+        Nome = "Arte Palladium",
+        Endereco = "R Maria Trevisan Tortato 290, AP 21"
+    };
+
+    var artePalladiumAP42 = new Imovel
+    {
+        Tipo = "Edificio",
+        Nome = "Arte Palladium",
+        Endereco = "R Maria Trevisan Tortato 290, AP 42"
+    };
+
+    db.Condominios.Add(artePalladiumAP21);
+    db.Condominios.Add(artePalladiumAP42);
     await db.SaveChangesAsync();
-    return Results.Created($"/Imoveis/{imovel.ID}", imovel);
+
+    var imoveis = new List<Imovel> { artePalladiumAP21, artePalladiumAP42 };
+
+    return Results.Ok(imoveis);
 });
 
 app.MapPut("/Imoveis/{id}", async (int id, Imovel imovelAlterado, BancodeDados db) =>
@@ -139,7 +210,8 @@ app.MapPut("/Imoveis/{id}", async (int id, Imovel imovelAlterado, BancodeDados d
     }
 
     imovel.Nome = imovelAlterado.Nome;
-    
+    imovel.Endereco = imovelAlterado.Endereco;
+
     await db.SaveChangesAsync();
 
     return Results.NoContent();
@@ -169,9 +241,16 @@ app.MapGet("/Obras", async (BancodeDados db) =>
 
 app.MapPost("/Obras", async (Obra obra, BancodeDados db) =>
 {
-    db.Obras.Add(obra);
+    var arteAcqua = new Obra
+    {
+        Nome = "Arte Acqua",
+        Endereco = "R Bento Viana 380"
+    };
+
+    db.Obras.Add(arteAcqua);
     await db.SaveChangesAsync();
-    return Results.Created($"/Obras/{obra.ID}", obra);
+
+    return Results.Created($"/Obras/{arteAcqua.ID}", arteAcqua);
 });
 
 app.MapPut("/Obras/{id}", async (int id, Obra obraAlterada, BancodeDados db) =>
@@ -183,6 +262,8 @@ app.MapPut("/Obras/{id}", async (int id, Obra obraAlterada, BancodeDados db) =>
     }
 
     obra.Nome = obraAlterada.Nome;
+    obra.Endereco = obraAlterada.Endereco;
+
     await db.SaveChangesAsync();
 
     return Results.NoContent();
@@ -212,9 +293,17 @@ app.MapGet("/Empreiteiros", async (BancodeDados db) =>
 
 app.MapPost("/Empreiteiros", async (Empreiteiro empreiteiro, BancodeDados db) =>
 {
-    db.Empreiteiros.Add(empreiteiro);
+    var novoEmpreiteiro = new Empreiteiro
+    {
+        Nome = "Celso Mendes", 
+        EquipesManutencao = new List<EquipeManutencao>(), 
+        ManutencoesAtendidas = new List<ChamadoManutencao>() 
+    };
+
+    db.Empreiteiros.Add(novoEmpreiteiro);
     await db.SaveChangesAsync();
-    return Results.Created($"/Empreiteiros/{empreiteiro.ID}", empreiteiro);
+
+    return Results.Created($"/Empreiteiros/{novoEmpreiteiro.ID}", novoEmpreiteiro);
 });
 
 app.MapPut("/Empreiteiros/{id}", async (int id, Empreiteiro empreiteiroAlterado, BancodeDados db) =>
@@ -226,7 +315,6 @@ app.MapPut("/Empreiteiros/{id}", async (int id, Empreiteiro empreiteiroAlterado,
     }
 
     empreiteiro.Nome = empreiteiroAlterado.Nome;
-
     await db.SaveChangesAsync();
 
     return Results.NoContent();
@@ -247,63 +335,26 @@ app.MapDelete("/Empreiteiros/{id}", async (int id, BancodeDados db) =>
 });
 
 
-
-//Equipes de Manutenção
-app.MapGet("/EquipesManutencao", async (BancodeDados db) =>
-{
-    var equipes = await db.EquipeManutencao.ToListAsync();
-    return Results.Ok(equipes);
-});
-
-app.MapPost("/EquipesManutencao", async (EquipeManutencao equipe, BancodeDados db) =>
-{
-    db.EquipeManutencao.Add(equipe);
-    await db.SaveChangesAsync();
-    return Results.Created($"/EquipesManutencao/{equipe.ID}", equipe);
-});
-
-app.MapPut("/EquipesManutencao/{id}", async (int id, EquipeManutencao equipeAlterada, BancodeDados db) =>
-{
-    var equipe = await db.EquipeManutencao.FindAsync(id);
-    if (equipe == null)
-    {
-        return Results.NotFound();
-    }
-
-    equipe.Nome = equipeAlterada.Nome;
-    
-    await db.SaveChangesAsync();
-
-    return Results.NoContent();
-});
-
-app.MapDelete("/EquipesManutencao/{id}", async (int id, BancodeDados db) =>
-{
-    var equipe = await db.EquipeManutencao.FindAsync(id);
-    if (equipe == null)
-    {
-        return Results.NotFound();
-    }
-
-    db.EquipeManutencao.Remove(equipe);
-    await db.SaveChangesAsync();
-
-    return Results.NoContent();
-});
-
-
 //Líderes da Equipe
 app.MapGet("/LideresEquipe", async (BancodeDados db) =>
 {
-    var lideres = await db.LiderEquipe.ToListAsync();
-    return Results.Ok(lideres);
+    var lideresEquipe = await db.LiderEquipe.ToListAsync();
+    return Results.Ok(lideresEquipe);
 });
 
 app.MapPost("/LideresEquipe", async (LiderEquipe lider, BancodeDados db) =>
 {
-    db.LiderEquipe.Add(lider);
+    var novoLider = new LiderEquipe
+    {
+        Nome = "Leonardo",
+        EquipeID = 2,
+        EquipesManutencao = new List<EquipeManutencao>()
+    };
+
+    db.LiderEquipe.Add(novoLider);
     await db.SaveChangesAsync();
-    return Results.Created($"/LideresEquipe/{lider.ID}", lider);
+
+    return Results.Created($"/LideresEquipe/{novoLider.ID}", novoLider);
 });
 
 app.MapPut("/LideresEquipe/{id}", async (int id, LiderEquipe liderAlterado, BancodeDados db) =>
@@ -315,7 +366,7 @@ app.MapPut("/LideresEquipe/{id}", async (int id, LiderEquipe liderAlterado, Banc
     }
 
     lider.Nome = liderAlterado.Nome;
-
+    lider.EquipeID = liderAlterado.EquipeID;
     await db.SaveChangesAsync();
 
     return Results.NoContent();
@@ -336,5 +387,61 @@ app.MapDelete("/LideresEquipe/{id}", async (int id, BancodeDados db) =>
 });
 
 
+//Equipes de Manutenção
+app.MapGet("/EquipesManutencao", async (BancodeDados db) =>
+{
+    var equipesManutencao = await db.EquipeManutencao.ToListAsync();
+    return Results.Ok(equipesManutencao);
+});
+
+app.MapPost("/EquipesManutencao", async (EquipeManutencao equipe, BancodeDados db) =>
+{
+    var novaEquipe = new EquipeManutencao
+    {
+        Nome = equipe.Nome,
+        Lider = new LiderEquipe
+        {
+            Nome = "Leonardo",
+            EquipeID = 2
+        },
+        Empreiteiro = new Empreiteiro 
+        {
+            Nome = "Celso Mendes" 
+        }
+    };
+
+    db.EquipeManutencao.Add(novaEquipe);
+    await db.SaveChangesAsync();
+
+    return Results.Created($"/EquipesManutencao/{novaEquipe.ID}", novaEquipe);
+});
+
+app.MapPut("/EquipesManutencao/{id}", async (int id, EquipeManutencao equipeAlterada, BancodeDados db) =>
+{
+    var equipe = await db.EquipeManutencao.FindAsync(id);
+    if (equipe == null)
+    {
+        return Results.NotFound();
+    }
+
+    equipe.Nome = equipeAlterada.Nome;
+    await db.SaveChangesAsync();
+
+    return Results.NoContent();
+});
+
+app.MapDelete("/EquipesManutencao/{id}", async (int id, BancodeDados db) =>
+{
+    var equipe = await db.EquipeManutencao.FindAsync(id);
+    if (equipe == null)
+    {
+        return Results.NotFound();
+    }
+
+    db.EquipeManutencao.Remove(equipe);
+    await db.SaveChangesAsync();
+
+    return Results.NoContent();
+});
 
 app.Run();

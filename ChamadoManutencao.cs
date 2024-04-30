@@ -6,5 +6,6 @@ public class ChamadoManutencao
     public DateTime DataAbertura { get; set; }
     public DateTime DataPrimeiroContato { get; set; }
     public string MotivoNaoRealizacao { get; set; }
-    public string EmpreiteirosNecessarios { get; set; }
+    public EquipeManutencao EquipeManutencao { get; set; }
+    public int EquipeManutencaoID { get; set; }
 }
