@@ -8,6 +8,8 @@ class BancodeDados : DbContext
     public DbSet<LiderEquipe> LiderEquipe { get; set; }
     public DbSet<Obra> Obras { get; set; }
     public DbSet<Manutencoes> Manutencoes { get; set; }
+    public DbSet<ChamadoManutencao> ChamadosManutencao { get; set; }
+
 
     protected override void OnConfiguring(DbContextOptionsBuilder builder)
     {
